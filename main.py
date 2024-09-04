@@ -1,6 +1,9 @@
 # This example requires the 'message_content' intent.
 from dotenv import load_dotenv
 import discord
+import os
+
+load_dotenv()
 
 class MyClient(discord.Client):
     async def on_ready(self):
@@ -13,4 +16,4 @@ intents = discord.Intents.default()
 intents.message_content = True
 
 client = MyClient(intents=intents)
-client.run('my token goes here')
+client.run(os.getenv("TOKEN"))
