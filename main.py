@@ -1,7 +1,5 @@
-# This example requires the 'message_content' intent.
 from dotenv import load_dotenv, set_key
-from discord import app_commands, Intents, Client, Interaction, TextChannel, Message
-from discord.ext import commands
+from discord import Intents, Client
 import inspect
 import os
 
@@ -26,7 +24,7 @@ class MyClient(Client):
             else:
                 msg = message.content
                 try:
-                    num = int(msg, 16) #msg = hex(num).split('x')[-1]
+                    num = int(msg, 16)
                 except ValueError:
                     num = -1
                 if num == last_num+1:
@@ -46,10 +44,6 @@ client = MyClient(intents=intents)
 
 @client.event
 async def on_ready():
-    """ This is called when the bot is ready and has a connection with Discord
-        It also prints out the bot's invite URL that automatically uses your
-        Client ID to make sure you invite the correct bot with correct scopes.
-    """
     print(inspect.cleandoc(f"""
         Logged in as {client.user} (ID: {client.user.id})
 
@@ -58,4 +52,4 @@ async def on_ready():
     """), end="\n")
 
 
-client.run(os.getenv("TOKEN"))
+client.run(TOKEN)
