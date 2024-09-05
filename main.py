@@ -37,6 +37,7 @@ class MyClient(Client):
                     set_key(".env", "COUNT", str(last_num))
                 else: 
                     await message.channel.send(f"Ajéje, {message.author.mention} to pokazil! Poslední bylo **{hex(last_num).split('x')[-1]}**, zvaž svoji odpověď.")
+                    await message.delete()
         
 intents = Intents.default()
 intents.message_content = True
