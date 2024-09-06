@@ -2,6 +2,7 @@ from dotenv import load_dotenv, set_key
 from discord import Intents, Client
 import inspect
 import os
+from discord.ext import commands
 
 load_dotenv()
 TOKEN = str(os.getenv("TOKEN"))
@@ -36,20 +37,27 @@ class MyClient(Client):
                 else: 
                     await message.channel.send(f"Ajéje, {message.author.mention} to pokazil! Poslední bylo **{hex(last_num).split('x')[-1]}**, zvaž svoji odpověď.")
                     await message.delete()
+    
+    async def on_ready():
+        print(inspect.cleandoc(f"""
+            Logged in as {client.user} (ID: {client.user.id})
+
+            Use this URL to invite {client.user} to your server:
+            https://discord.com/api/oauth2/authorize?client_id={client.user.id}&scope=applications.commands%20bot
+        """), end="\n")
         
+    
+    
+        
+        
+        
+            
 intents = Intents.default()
 intents.message_content = True
 
-client = MyClient(intents=intents)
+client = MyClient(intents=intents, command_prefix="/")
 
-@client.event
-async def on_ready():
-    print(inspect.cleandoc(f"""
-        Logged in as {client.user} (ID: {client.user.id})
 
-        Use this URL to invite {client.user} to your server:
-        https://discord.com/api/oauth2/authorize?client_id={client.user.id}&scope=applications.commands%20bot
-    """), end="\n")
 
 
 client.run(TOKEN)
