@@ -1,12 +1,13 @@
-# Discord-Counting-Bot
+# 🔢 Discord counting bot
 
 Simple Discord bot for counting in decimal, hexadecimal or binary. It can handle as many channels/servers as you want.
 The bot checks messages in the selected channel to see if the count is correct.
 
 A huge credit goes to [TheFrederick (@thefrederick-git)](https://github.com/thefrederick-git), who really helped me out and explained to me how the bot is developing. I now understand how things work (I think :D).
+- **Author:** [FOFOLA1 (@FOFOLA1)](https://github.com/fofola1)
+- **Credit:** [TheFrederick (@thefrederick-git)](https://github.com/thefrederick-git)
 
-
-## How to run the bot
+## 🔧 How to run the bot
 **1. Clone this repository**
 
 **2. Setup and activate the .venv**
@@ -31,7 +32,7 @@ python bot.py
 ```
 
 
-## Setup channel for counting and commands
+## ⭐ Setup channel for counting and commands
 I recommend using an empty channel or create a new one. These commands can use only server owner.
 
 To setup counting channel use ``/setup`` command:
