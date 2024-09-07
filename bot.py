@@ -57,7 +57,7 @@ def save_data(data):
 @bot.tree.command(name="setup",description="Setup counting bot")
 @app_commands.check(is_owner)
 @app_commands.describe(channel='Choose the channel for counting', style='Styles of counting: Hexadecimal: `hex`, Decimal: `dec`, Binary: `bin`')
-async def setup_command(interaction:Interaction, channel: channel.TextChannel, style: str):
+async def setup_command(interaction:Interaction, channel: channel.TextChannel, style: str = "dec"):
     style = style.lower()
     if style not in ["hex", "dec", "bin"]:
         await interaction.response.send_message("Invalid type! Valid types are:\n\tBinary: `bin`\n\tDecimal: `dec`\n\tHexadecimal: `hex`.", ephemeral=True)
