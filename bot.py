@@ -2,12 +2,39 @@
 from discord import Intents,  Interaction, channel, Status, app_commands
 import inspect
 from discord.ext import commands
-from json import load, dump
+from json import load, dump, JSONDecodeError
 import datetime
+import requests
 
+try:
+    with open('.json', 'r') as file:
+        data = load(file)
+except (FileNotFoundError, JSONDecodeError):
+    while True:
+        inp = input("Please enter your bot token:\n> ")
+        
+        try:
+            data = requests.get("https://discord.com/api/v10/users/@me", headers={
+                "Authorization": f"Bot {inp}"
+            }).json()
+        except requests.exceptions.RequestException as e:
+            if e.__class__ == requests.exceptions.ConnectionError:
+                exit(f"ConnectionError: Discord is commonly blocked on public networks, please make sure discord.com is reachable!")
 
-with open('.json', 'r') as file:
-    data = load(file)
+            elif e.__class__ == requests.exceptions.Timeout:
+                exit(f"Timeout: Connection to Discord's API has timed out (possibly being rate limited?)")
+
+            exit(f"Unknown error has occurred! Additional info:\n{e}")
+        if data.get("id", None):
+            break
+        print("Invalid token, please try again.")
+        
+    data = {
+        "token": inp,
+        "channels": []
+    }
+    with open('.json', 'w') as file:
+        dump(data, file)
     
 
 TOKEN = data["token"]
@@ -88,7 +115,7 @@ async def reset_command_error(interaction: Interaction, error):
 
 @bot.tree.command(name="remove",description="Remove counting in the channel")
 @app_commands.check(is_owner)
-@app_commands.describe(channel='Choose the channel for removing')
+@app_commands.describe(channel='Choose the channel for removing counting')
 async def remove_command(interaction: Interaction, channel: channel.TextChannel):
     for index, channel_data in enumerate(data['channels']):
         if channel.id == channel_data["id"]:
@@ -153,7 +180,7 @@ async def on_message(message):
                 await message.delete()
                     
                     
-bot.run(token=TOKEN)
+bot.run(TOKEN)
 
 
 
