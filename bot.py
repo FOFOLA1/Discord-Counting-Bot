@@ -48,6 +48,9 @@ bot = commands.Bot(command_prefix="/", intents=intents)
 def is_owner(interaction: Interaction):
     return interaction.user.id == interaction.guild.owner_id
 
+def is_bot_owner(interaction: Interaction):
+    return interaction.user.id == 709818829965885491
+
 def save_data(data):
     with open('.json', 'w') as file:
         dump(data, file)
@@ -84,7 +87,7 @@ async def setup_command_error(interaction: Interaction, error):
     
     
 @bot.tree.command(name="shutdown", description="Shutdown the bot")
-@app_commands.check(is_owner)
+@app_commands.check(is_bot_owner)
 async def shutdown_command(interaction: Interaction):
     await interaction.response.send_message("Shutting down the bot...", ephemeral=True)
     await bot.change_presence(status=Status.offline)
