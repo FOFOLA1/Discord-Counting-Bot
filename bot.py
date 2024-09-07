@@ -47,9 +47,6 @@ intents.members = True
 bot = commands.Bot(command_prefix="/", intents=intents)
 
 def is_owner(interaction: Interaction):
-
-    print(interaction.user.id)
-    print(interaction.guild.owner_id)
     return interaction.user.id == interaction.guild.owner_id
 
 
@@ -86,9 +83,9 @@ async def setup_command(interaction:Interaction, channel: channel.TextChannel, s
     save_data(data)
 
     await interaction.response.send_message(f"Bot has been successfully set in {channel.jump_url}", ephemeral=True)  
-'''@setup_command.error
+@setup_command.error
 async def setup_command_error(interaction: Interaction, error):
-    await interaction.response.send_message(f"You must be an owner to do that!", ephemeral=True)'''
+    await interaction.response.send_message(f"You must be an owner to do that!", ephemeral=True)
     
     
 @bot.tree.command(name="shutdown", description="Shutdown the bot (for bot owner only)")
@@ -97,6 +94,17 @@ async def shutdown_command(interaction: Interaction):
     await interaction.response.send_message("Shutting down the bot...", ephemeral=True)
     await bot.change_presence(status=Status.offline)
     await bot.close()
+@shutdown_command.error
+async def shutdown_command_error(interaction: Interaction, error):
+    await interaction.response.send_message("You must be a bot owner to do that!", ephemeral=True)
+    
+    
+@bot.tree.command(name="remove_all_channels", description="Removes all registered counting channels (for bot owner only)")
+@app_commands.check(is_bot_owner)
+async def shutdown_command(interaction: Interaction):
+    data['channels'].clear()
+    save_data(data)
+    await interaction.response.send_message("Data cleared!", ephemeral=True)
 @shutdown_command.error
 async def shutdown_command_error(interaction: Interaction, error):
     await interaction.response.send_message("You must be a bot owner to do that!", ephemeral=True)
