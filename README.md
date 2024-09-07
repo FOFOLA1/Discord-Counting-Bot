@@ -12,12 +12,12 @@ A huge credit goes to [TheFrederick (@thefrederick-git)](https://github.com/thef
 Windows:
 ```bash
 python -m venv ./venv
-.venv/Scripts/activate.bat
+./venv/Scripts/activate.bat
 ```
 Linux:
 ```bash
 python -m venv ./venv
-source .venv/Scripts/activate
+source ./venv/Scripts/activate
 ```
 3. Install required packages
 ```bash
@@ -25,7 +25,7 @@ pip install -r requirements.txt
 ```
 4. Enable bot
 ```bash
-python main.py
+python bot.py
 ```
 
 ##Setup channel for counting and commands
