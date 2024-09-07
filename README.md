@@ -7,24 +7,25 @@ A huge credit goes to [TheFrederick (@thefrederick-git)](https://github.com/thef
 
 
 ## How to run the bot
-1. Clone this repository
-2. Setup and activate the .venv
+**1. Clone this repository**
 
-**Windows:**
+**2. Setup and activate the .venv**
+
+- **Windows:**
 ```bash
 python -m venv ./venv
 ./venv/Scripts/activate.bat
 ```
-**Linux:**
+- **Linux:**
 ```bash
 python -m venv ./venv
 source ./venv/Scripts/activate
 ```
-3. Install required packages
+**3. Install required packages**
 ```bash
 pip install -r requirements.txt
 ```
-4. Enable bot
+**4. Enable bot**
 ```bash
 python bot.py
 ```
