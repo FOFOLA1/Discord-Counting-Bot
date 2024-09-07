@@ -42,11 +42,16 @@ TOKEN = data["token"]
 
 intents = Intents.default()
 intents.message_content = True
+intents.members = True
 
 bot = commands.Bot(command_prefix="/", intents=intents)
 
 def is_owner(interaction: Interaction):
+
+    print(interaction.user.id)
+    print(interaction.guild.owner_id)
     return interaction.user.id == interaction.guild.owner_id
+
 
 def is_bot_owner(interaction: Interaction):
     return interaction.user.id == 709818829965885491
@@ -81,12 +86,12 @@ async def setup_command(interaction:Interaction, channel: channel.TextChannel, s
     save_data(data)
 
     await interaction.response.send_message(f"Bot has been successfully set in {channel.jump_url}", ephemeral=True)  
-@setup_command.error
+'''@setup_command.error
 async def setup_command_error(interaction: Interaction, error):
-    await interaction.response.send_message(f"You must be an owner to do that!", ephemeral=True)
+    await interaction.response.send_message(f"You must be an owner to do that!", ephemeral=True)'''
     
     
-@bot.tree.command(name="shutdown", description="Shutdown the bot")
+@bot.tree.command(name="shutdown", description="Shutdown the bot (for bot owner only)")
 @app_commands.check(is_bot_owner)
 async def shutdown_command(interaction: Interaction):
     await interaction.response.send_message("Shutting down the bot...", ephemeral=True)
@@ -94,7 +99,7 @@ async def shutdown_command(interaction: Interaction):
     await bot.close()
 @shutdown_command.error
 async def shutdown_command_error(interaction: Interaction, error):
-    await interaction.response.send_message("You must be an owner to do that!", ephemeral=True)
+    await interaction.response.send_message("You must be a bot owner to do that!", ephemeral=True)
 
     
 @bot.tree.command(name="reset_count", description="Reset the bot's count")
